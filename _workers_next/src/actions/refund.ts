@@ -58,10 +58,15 @@ export async function markOrderRefunded(orderId: string) {
     await db.update(orders).set({ status: 'refunded' }).where(eq(orders.orderId, orderId))
 
     // Reclaim card back to stock (best effort)
+    // Reclaim card back to stock (best effort)
     if (order.cardKey) {
         try {
-            await db.update(cards).set({ isUsed: false, usedAt: null })
-                .where(and(eq(cards.productId, order.productId), eq(cards.cardKey, order.cardKey)))
+            const keys = order.cardKey.split('\n').filter((k: string) => k.trim() !== '')
+            if (keys.length > 0) {
+                const { inArray } = await import("drizzle-orm")
+                await db.update(cards).set({ isUsed: false, usedAt: null })
+                    .where(and(eq(cards.productId, order.productId), inArray(cards.cardKey, keys)))
+            }
         } catch {
             // ignore
         }
