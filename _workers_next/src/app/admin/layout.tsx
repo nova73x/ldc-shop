@@ -21,6 +21,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
             const currentLogo = await getSetting("shop_logo")
             if (!currentLogo || !currentLogo.trim()) {
                 await setSetting("shop_logo", user.avatar_url)
+                await setSetting("shop_logo_updated_at", String(Date.now()))
             }
         } catch {
             // best effort

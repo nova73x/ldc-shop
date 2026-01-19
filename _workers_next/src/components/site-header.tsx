@@ -45,6 +45,7 @@ export async function SiteHeader() {
     if (isAdmin && user?.avatar_url && (!shopLogoOverride || !shopLogoOverride.trim())) {
         try {
             await setSetting('shop_logo', user.avatar_url)
+            await setSetting('shop_logo_updated_at', String(Date.now()))
             shopLogoOverride = user.avatar_url
         } catch {
             // best effort

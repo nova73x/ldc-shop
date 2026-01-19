@@ -41,15 +41,18 @@ export async function generateMetadata(): Promise<Metadata> {
   let shopName: string | null = null;
   let shopDescription: string | null = null;
   let noIndex = false;
+  let logoUpdatedAt: string | null = null;
   try {
-    const [name, desc, noIndexSetting] = await Promise.all([
+    const [name, desc, noIndexSetting, logoUpdatedAtSetting] = await Promise.all([
       getSetting("shop_name"),
       getSetting("shop_description"),
-      getSetting("noindex_enabled")
+      getSetting("noindex_enabled"),
+      getSetting("shop_logo_updated_at"),
     ]);
     shopName = name;
     shopDescription = desc;
     noIndex = noIndexSetting === 'true';
+    logoUpdatedAt = logoUpdatedAtSetting;
   } catch {
     shopName = null;
     shopDescription = null;
@@ -72,9 +75,9 @@ export async function generateMetadata(): Promise<Metadata> {
       "mobile-web-app-capable": "yes",
     },
     icons: {
-      icon: "/favicon",
-      shortcut: "/favicon",
-      apple: "/favicon",
+      icon: logoUpdatedAt ? `/favicon?v=${logoUpdatedAt}` : "/favicon",
+      shortcut: logoUpdatedAt ? `/favicon?v=${logoUpdatedAt}` : "/favicon",
+      apple: logoUpdatedAt ? `/favicon?v=${logoUpdatedAt}` : "/favicon",
     },
   };
 

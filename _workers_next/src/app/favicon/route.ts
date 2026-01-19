@@ -12,18 +12,33 @@ let cached: {
 
 export async function GET(request: Request) {
   let target = "/icon.svg";
+  let logoUpdatedAt: string | null = null;
   try {
-    const logo = await getSetting("shop_logo");
+    const [logo, updatedAt] = await Promise.all([
+      getSetting("shop_logo"),
+      getSetting("shop_logo_updated_at"),
+    ]);
     if (logo?.trim()) {
       target = logo.trim();
     }
+    logoUpdatedAt = updatedAt;
   } catch {
     // best effort
   }
 
-  const url = target.startsWith("http://") || target.startsWith("https://")
+  const baseUrl = target.startsWith("http://") || target.startsWith("https://")
     ? target
     : new URL(target, request.url).toString();
+  const url = (() => {
+    if (!logoUpdatedAt) return baseUrl;
+    try {
+      const u = new URL(baseUrl);
+      u.searchParams.set("v", logoUpdatedAt);
+      return u.toString();
+    } catch {
+      return baseUrl;
+    }
+  })();
 
   try {
     const now = Date.now();
