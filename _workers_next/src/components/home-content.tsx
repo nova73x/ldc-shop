@@ -285,10 +285,10 @@ export async function HomeContent({ products, announcement, visitorCount, catego
                                 </CardContent>
 
                                 {/* Footer Section */}
-                                <CardFooter className="p-4 pt-0 flex items-center justify-between gap-3 mt-auto border-t border-border/30 bg-muted/5">
-                                    <div className="flex flex-col">
+                                <CardFooter className="p-4 pt-0 flex flex-wrap items-center gap-3 mt-auto border-t border-border/30 bg-muted/5">
+                                    <div className="flex min-w-0 flex-1 flex-col">
                                         <div className="flex items-baseline gap-2">
-                                            <span className="text-lg font-bold text-primary tabular-nums">{Number(product.price)}</span>
+                                            <span className="text-lg font-bold text-primary tabular-nums break-all">{Number(product.price)}</span>
                                             <span className="text-xs text-muted-foreground font-medium uppercase">{t('common.credits')}</span>
                                             {product.compareAtPrice && Number(product.compareAtPrice) > Number(product.price) && (
                                                 <span className="text-xs text-muted-foreground/70 line-through tabular-nums">
@@ -308,11 +308,11 @@ export async function HomeContent({ products, announcement, visitorCount, catego
                                         </div>
                                     </div>
 
-                                    <Link href={`/buy/${product.id}`}>
-                                            <Button
-                                                size="sm"
-                                                className={cn(
-                                                    "h-8 px-4 text-xs font-medium rounded-full shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer",
+                                    <Link href={`/buy/${product.id}`} className="ml-auto">
+                                        <Button
+                                            size="sm"
+                                            className={cn(
+                                                "h-8 px-4 text-xs font-medium rounded-full shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer",
                                                 product.stockCount > 0 ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-muted text-muted-foreground hover:bg-muted"
                                             )}
                                             disabled={product.stockCount <= 0}
