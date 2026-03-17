@@ -388,23 +388,25 @@ export function BuyContent({
                                         )}
                                     </div>
 
-                                    <div className="space-y-4">
-                                        <h1 className="text-2xl font-semibold tracking-tight text-foreground md:text-3xl">
-                                            {displayProduct.name}
-                                        </h1>
+                                    <div className="rounded-[1.55rem] border border-border/20 bg-background/58 px-5 py-5 shadow-[0_18px_48px_-42px_rgba(15,23,42,0.34)] md:px-6 md:py-6">
+                                        <div className="space-y-4">
+                                            <h1 className="max-w-3xl text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.035em] text-foreground [text-wrap:balance] md:text-[2.1rem]">
+                                                {displayProduct.name}
+                                            </h1>
 
-                                        {metaLoading ? (
-                                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                                <span>{t('common.loading')}</span>
-                                            </div>
-                                        ) : showReviewSummary ? (
-                                            <div className="flex w-fit flex-wrap items-center gap-3 rounded-full border border-border/45 bg-background/72 px-4 py-2 text-sm text-muted-foreground">
-                                                <StarRating rating={Math.round(averageRatingState)} size="sm" />
-                                                <span className="font-medium text-foreground">{averageRatingState.toFixed(1)}</span>
-                                                <span>{reviewCountState} {t('review.title')}</span>
-                                            </div>
-                                        ) : null}
+                                            {metaLoading ? (
+                                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                                                    <Loader2 className="h-4 w-4 animate-spin" />
+                                                    <span>{t('common.loading')}</span>
+                                                </div>
+                                            ) : showReviewSummary ? (
+                                                <div className="flex w-fit flex-wrap items-center gap-3 rounded-full border border-border/45 bg-card/75 px-4 py-2 text-sm text-muted-foreground">
+                                                    <StarRating rating={Math.round(averageRatingState)} size="sm" />
+                                                    <span className="font-medium text-foreground">{averageRatingState.toFixed(1)}</span>
+                                                    <span>{reviewCountState} {t('review.title')}</span>
+                                                </div>
+                                            ) : null}
+                                        </div>
                                     </div>
 
                                     <div className="rounded-[1.55rem] border border-border/20 bg-background/55 p-5 md:p-6">
